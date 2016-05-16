@@ -239,11 +239,15 @@ public class GadgetManager implements Listener {
                     }
                     if (cp.currentGadget == null)
                         cp.removeGadget();
-                    equipGadget(getGadgetByName(sb.toString()), (Player) event.getWhoClicked());
-                    if (cp.currentGadget.getType().requiresAmmo()) {
-                        cp.currentGadget.lastPage = currentPage;
+                    //MegaCraft - Need ammo to equip
+                    if (cp.currentGadget.getType().requiresAmmo() && 
+                            UltraCosmetics.getCustomPlayer((Player) event.getWhoClicked()).getAmmo(cp.currentGadget.getType().toString().toLowerCase()) < 1) {
+                        event.getWhoClicked().sendMessage(MessageManager.getMessage("MegaCraft.No-Ammo"));
+                        /*cp.currentGadget.lastPage = currentPage;
                         cp.currentGadget.openAmmoPurchaseMenu();
-                        cp.currentGadget.openGadgetsInvAfterAmmo = true;
+                        cp.currentGadget.openGadgetsInvAfterAmmo = true;*/
+                    } else {
+                        equipGadget(getGadgetByName(sb.toString()), (Player) event.getWhoClicked());
                     }
                     return;
                 }
@@ -271,8 +275,9 @@ public class GadgetManager implements Listener {
                     }
                     equipGadget(getGadgetByName(sb.toString()), (Player) event.getWhoClicked());
                     if (cp.currentGadget != null && UltraCosmetics.getInstance().isAmmoEnabled() && cp.getAmmo(cp.currentGadget.getType().toString().toLowerCase()) < 1 && cp.currentGadget.getType().requiresAmmo()) {
-                        cp.currentGadget.lastPage = currentPage;
-                        cp.currentGadget.openAmmoPurchaseMenu();
+                        //MegaCraft - No purchasing ammo
+                        /*cp.currentGadget.lastPage = currentPage;
+                        cp.currentGadget.openAmmoPurchaseMenu();*/
                     } else {
                         if (!UltraCosmetics.closeAfterSelect)
                             openMenu((Player) event.getWhoClicked(), currentPage);

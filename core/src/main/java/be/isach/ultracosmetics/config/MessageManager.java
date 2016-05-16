@@ -335,6 +335,9 @@ public class MessageManager {
         addMessage("Enabled-Gadgets", "%prefix% &9you enabled gadgets!");
         addMessage("Disabled-Gadgets", "%prefix% &9you disabled gadgets!");
         addMessage("Not-Allowed-From-Console", "&c&lThis can't be executed from console!");
+        
+        //MegaCraft
+        addMessage("MegaCraft.No-Ammo", "%prefix% &cYou do not have any ammo for that gadget!");
     }
 
     /**

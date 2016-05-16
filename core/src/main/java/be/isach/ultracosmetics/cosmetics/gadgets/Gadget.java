@@ -325,7 +325,8 @@ public abstract class Gadget implements Listener {
     /**
      * Opens Ammo Purchase Menu.
      */
-    public void openAmmoPurchaseMenu() {
+    //MegaCraft - No purchasing ammo
+    /*public void openAmmoPurchaseMenu() {
 
         Inventory inventory = Bukkit.createInventory(null, 54, MessageManager.getMessage("Menus.Buy-Ammo"));
 
@@ -345,7 +346,7 @@ public abstract class Gadget implements Listener {
         getPlayer().openInventory(inventory);
 
         this.inv = inventory;
-    }
+    }*/
 
     /**
      * Event Listener.
@@ -426,7 +427,9 @@ public abstract class Gadget implements Listener {
 
             if (UltraCosmetics.getInstance().isAmmoEnabled() && getType().requiresAmmo()) {
                 if (UltraCosmetics.getCustomPlayer(getPlayer()).getAmmo(getType().toString().toLowerCase()) < 1) {
-                    openAmmoPurchaseMenu();
+                    //MegaCraft - No purchasing ammo
+                    //openAmmoPurchaseMenu();
+                    getPlayer().sendMessage(MessageManager.getMessage("MegaCraft.No-Ammo"));
                     return;
                 }
             }
