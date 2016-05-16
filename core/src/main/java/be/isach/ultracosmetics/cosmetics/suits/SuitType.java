@@ -2,6 +2,9 @@ package be.isach.ultracosmetics.cosmetics.suits;
 
 import be.isach.ultracosmetics.config.MessageManager;
 import be.isach.ultracosmetics.config.SettingsManager;
+import be.isach.ultracosmetics.cosmetics.suits.ColoredSuits.*;
+
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -19,7 +22,17 @@ public enum SuitType {
     RAVE("Rave", "rave", "&7&oSuch amazing colors!", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, SuitRave.class),
     ASTRONAUT("Astronaut", "astronaut", "&7&oHouston?", Material.GLASS, Material.GOLD_CHESTPLATE, Material.GOLD_LEGGINGS, Material.GOLD_BOOTS, SuitAstronaut.class),
     DIAMOND("Diamond", "diamond", "&7&oShow your Mining skills\n&7&owith this amazing outfit!", Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS, SuitDiamond.class),
-    SANTA("Santa", "santa", "&7&oBecome Santa and deliver presents!", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, SuitSanta.class);
+    SANTA("Santa", "santa", "&7&oBecome Santa and deliver presents!", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, SuitSanta.class),
+    
+    //MegaCraft Suits
+    BLUE("Blue", "blue", "&9&oCool blue suit", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, BlueSuit.class, Color.BLUE),
+    GREEN("Green", "green", "&2&oSmart green suit", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, GreenSuit.class, Color.GREEN),
+    YELLOW("Yellow", "yellow", "&e&oBright yellow suit", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, YellowSuit.class, Color.YELLOW),
+    ORANGE("Orange", "orange", "&6&oEnergetic orange suit", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, OrangeSuit.class, Color.ORANGE),
+    RED("Red", "red", "&c&oPowerful red suit", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, RedSuit.class, Color.RED),
+    PURPLE("Purple", "purple", "&5&oRoyal purple suit", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, PurpleSuit.class, Color.PURPLE),
+    PINK("Pink", "pink", "&d&oCool pink suit", Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, PinkSuit.class, Color.FUCHSIA),
+    ;
 
     /**
      * The required permission to toggle SuitType.
@@ -87,6 +100,16 @@ public enum SuitType {
         this.leggings = l;
         this.clazz = clazz;
     }
+    
+    //MegaCraft Start - Allow colored suits
+    private Color color;
+    
+    SuitType(String configName, String permissionSuffix, String defaultDesc,
+            Material h, Material c, Material l, Material b, Class<? extends Suit> clazz, Color color) {
+        this(configName, permissionSuffix, defaultDesc, h, c, l, b, clazz);
+        this.color = color;
+   }
+   //MegaCraft End
 
     /**
      * Equips the Suit to a player.
@@ -258,6 +281,11 @@ public enum SuitType {
         for (int i = 0; i < description.size(); i++)
             stringBuilder.append(description.get(i) + (i < description.size() - 1 ? "\n" : ""));
         return stringBuilder.toString();
+    }
+    
+    //MegaCraft
+    public Color getColor() {
+        return color;
     }
 
 }

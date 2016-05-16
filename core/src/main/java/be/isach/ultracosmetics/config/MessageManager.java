@@ -338,6 +338,35 @@ public class MessageManager {
         
         //MegaCraft
         addMessage("MegaCraft.No-Ammo", "%prefix% &cYou do not have any ammo for that gadget!");
+        //MegaCraft Suits
+        addMessage("Suits.Blue.helmet-name", "&9&lBlue &f&lHelmet");
+        addMessage("Suits.Blue.chestplate-name", "&9&lBlue &f&lChestplate");
+        addMessage("Suits.Blue.leggings-name", "&9&lBlue &f&lLeggings");
+        addMessage("Suits.Blue.boots-name", "&9&lBlue &f&lBoots");
+        addMessage("Suits.Green.helmet-name", "&2&lGreen &f&lHelmet");
+        addMessage("Suits.Green.chestplate-name", "&2&lGreen &f&lChestplate");
+        addMessage("Suits.Green.leggings-name", "&2&lGreen &f&lLeggings");
+        addMessage("Suits.Green.boots-name", "&2&lGreen &f&lBoots");
+        addMessage("Suits.Yellow.helmet-name", "&e&lYellow &f&lHelmet");
+        addMessage("Suits.Yellow.chestplate-name", "&e&lYellow &f&lChestplate");
+        addMessage("Suits.Yellow.leggings-name", "&e&lYellow &f&lLeggings");
+        addMessage("Suits.Yellow.boots-name", "&e&lYellow &f&lBoots");
+        addMessage("Suits.Orange.helmet-name", "&6&lOrange &f&lHelmet");
+        addMessage("Suits.Orange.chestplate-name", "&6&lOrange &f&lChestplate");
+        addMessage("Suits.Orange.leggings-name", "&6&lOrange &f&lLeggings");
+        addMessage("Suits.Orange.boots-name", "&6&lOrange &f&lBoots");
+        addMessage("Suits.Red.helmet-name", "&c&lRed &f&lHelmet");
+        addMessage("Suits.Red.chestplate-name", "&c&lRed &f&lChestplate");
+        addMessage("Suits.Red.leggings-name", "&c&lRed &f&lLeggings");
+        addMessage("Suits.Red.boots-name", "&c&lRed &f&lBoots");
+        addMessage("Suits.Purple.helmet-name", "&5&lPurple &f&lHelmet");
+        addMessage("Suits.Purple.chestplate-name", "&5&lPurple &f&lChestplate");
+        addMessage("Suits.Purple.leggings-name", "&5&lPurple &f&lLeggings");
+        addMessage("Suits.Purple.boots-name", "&5&lPurple &f&lBoots");
+        addMessage("Suits.Pink.helmet-name", "&d&lPink &f&lHelmet");
+        addMessage("Suits.Pink.chestplate-name", "&d&lPink &f&lChestplate");
+        addMessage("Suits.Pink.leggings-name", "&d&lPink &f&lLeggings");
+        addMessage("Suits.Pink.boots-name", "&d&lPink &f&lBoots");
     }
 
     /**

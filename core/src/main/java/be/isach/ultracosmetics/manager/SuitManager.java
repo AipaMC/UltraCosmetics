@@ -35,7 +35,7 @@ public class SuitManager implements Listener {
 
     private final static int[] COSMETICS_SLOTS =
             {
-                    10, 12, 14, 16
+                    10, 11, 12, 13, 14, 15, 16
             };
     static List<Player> noSpamList = new ArrayList<>();
 
@@ -50,9 +50,10 @@ public class SuitManager implements Listener {
 
                 int i = 0;
                 int from = 1;
+                //MegaCraft - Come on? Really?
                 if (PAGE > 1)
-                    from = 21 * (PAGE - 1) + 1;
-                int to = 21 * PAGE;
+                    from = COSMETICS_SLOTS.length * (PAGE - 1) + 1;
+                int to = COSMETICS_SLOTS.length * PAGE;
                 for (int h = from; h <= to; h++) {
                     if (h > SuitType.enabled().size())
                         break;
@@ -129,6 +130,10 @@ public class SuitManager implements Listener {
                                     MathUtils.random.nextInt(256),
                                     MathUtils.random.nextInt(256)));
                             is.setItemMeta(colorMeta);
+                        } else if (suit.getColor() != null) {
+                            LeatherArmorMeta colorMeta = (LeatherArmorMeta) is.getItemMeta();
+                            colorMeta.setColor(suit.getColor());
+                            is.setItemMeta(colorMeta);
                         }
 
                         inv.setItem(COSMETICS_SLOTS[i] + d * 9, is);
@@ -137,6 +142,12 @@ public class SuitManager implements Listener {
                     if (shouldIncrement)
                         i++;
                 }
+                
+                //MegaCraft - Multiple pages woot woot!
+                if (PAGE > 1)
+                    inv.setItem(inv.getSize() - 18, ItemFactory.create(ItemFactory.createFromConfig("Categories.Previous-Page-Item").getItemType(), ItemFactory.createFromConfig("Categories.Previous-Page-Item").getData(), MessageManager.getMessage("Menu.Previous-Page")));
+                if (PAGE < getMaxPagesAmount())
+                    inv.setItem(inv.getSize() - 10, ItemFactory.create(ItemFactory.createFromConfig("Categories.Next-Page-Item").getItemType(), ItemFactory.createFromConfig("Categories.Next-Page-Item").getData(), MessageManager.getMessage("Menu.Next-Page")));
 
                 if (Category.SUITS.hasGoBackArrow())
                     inv.setItem(inv.getSize() - 6, ItemFactory.create(Material.ARROW, (byte) 0x0, MessageManager.getMessage("Menu.Main-Menu")));
@@ -170,7 +181,7 @@ public class SuitManager implements Listener {
         int max = 21;
         int i = SuitType.enabled().size();
         if (i % max == 0) return i / max;
-        double j = i / 21;
+        double j = i / COSMETICS_SLOTS.length;
         int h = (int) Math.floor(j * 100) / 100;
         return h + 1;
     }
