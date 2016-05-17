@@ -792,6 +792,10 @@ public class UltraCosmetics extends JavaPlugin {
                                 statement.executeUpdate();
                             }
                         }
+                        
+                        //MegaCraft - Persistent cosmetics
+                        PersistentCosmeticsUtil.open();
+                        
                         table = new Table(co, "UltraCosmeticsData");
                         sqlUtils = new SQLUtils(core);
                         DatabaseMetaData md = co.getMetaData();

@@ -14,6 +14,7 @@ import be.isach.ultracosmetics.cosmetics.suits.ArmorSlot;
 import be.isach.ultracosmetics.cosmetics.suits.Suit;
 import be.isach.ultracosmetics.cosmetics.treasurechests.TreasureChest;
 import be.isach.ultracosmetics.util.ItemFactory;
+import be.isach.ultracosmetics.util.PersistentCosmeticsUtil;
 import me.libraryaddict.disguise.DisguiseAPI;
 
 import org.bukkit.Bukkit;
@@ -100,7 +101,9 @@ public class CustomPlayer {
                 SettingsManager.getData(getPlayer()).addDefault("Gadgets-Enabled", true);
                 SettingsManager.getData(getPlayer()).addDefault("Third-Person-Morph-View", true);
             }
-           
+            
+            //MegaCraft - Persistent cosmetics
+            PersistentCosmeticsUtil.initPersistent(this);
 
         } catch (Exception exc) {
             // Player couldn't be found.

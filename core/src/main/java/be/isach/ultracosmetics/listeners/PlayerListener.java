@@ -5,6 +5,8 @@ import be.isach.ultracosmetics.UltraCosmetics;
 import be.isach.ultracosmetics.config.SettingsManager;
 import be.isach.ultracosmetics.run.FallDamageManager;
 import be.isach.ultracosmetics.util.ItemFactory;
+import be.isach.ultracosmetics.util.PersistentCosmeticsUtil;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -143,6 +145,9 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+        //MegaCraft - Persistent Cosmetics
+        PersistentCosmeticsUtil.save(UltraCosmetics.getCustomPlayer(event.getPlayer()));
+        
         if (UltraCosmetics.getCustomPlayer(event.getPlayer()).currentTreasureChest != null)
             UltraCosmetics.getCustomPlayer(event.getPlayer()).currentTreasureChest.forceOpen(0);
         UltraCosmetics.getCustomPlayer(event.getPlayer()).clear();
