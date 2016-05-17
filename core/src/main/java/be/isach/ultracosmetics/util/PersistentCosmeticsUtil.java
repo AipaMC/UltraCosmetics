@@ -9,10 +9,8 @@ import org.bukkit.Bukkit;
 import be.isach.ultracosmetics.CustomPlayer;
 import be.isach.ultracosmetics.UltraCosmetics;
 import be.isach.ultracosmetics.cosmetics.hats.Hat;
-import be.isach.ultracosmetics.cosmetics.particleeffects.ParticleEffect;
 import be.isach.ultracosmetics.cosmetics.particleeffects.ParticleEffectType;
 import be.isach.ultracosmetics.cosmetics.suits.ArmorSlot;
-import be.isach.ultracosmetics.cosmetics.suits.Suit;
 import be.isach.ultracosmetics.cosmetics.suits.SuitType;
 import be.isach.ultracosmetics.mysql.Table;
 
@@ -41,35 +39,23 @@ public class PersistentCosmeticsUtil {
     
     public static void save(CustomPlayer player) {
         //Get these sync so when they are cleared we still have them
-        Hat hat = player.currentHat;
-        SuitType helm = player.currentHelmet != null ? player.currentHelmet.getType() : null;
-        SuitType chest = player.currentChestplate != null ? player.currentChestplate.getType() : null;
-        SuitType legs = player.currentLeggings != null ? player.currentHelmet.getType() : null;
-        SuitType boots = player.currentBoots != null ? player.currentBoots.getType() : null;
-        ParticleEffect particle = player.currentParticleEffect;
+        String hat = player.currentHat != null ? player.currentHat.name() : "";
+        String helm = player.currentHelmet != null ? player.currentHelmet.getType().name() : "";
+        String chest = player.currentChestplate != null ? player.currentChestplate.getType().name() : "";
+        String legs = player.currentLeggings != null ? player.currentHelmet.getType().name() : "";
+        String boots = player.currentBoots != null ? player.currentBoots.getType().name() : "";
+        String particle = player.currentParticleEffect != null ? player.currentParticleEffect.getType().name() : "";
         
         Bukkit.getScheduler().runTaskAsynchronously(UltraCosmetics.getInstance(), new Runnable() {
             @Override
             public void run() {
-                if (hat != null) {
-                    table.update().set("hat", hat.name()).where("uuid", player.getUuid().toString()).execute();
-                }
-                if (helm != null) {
-                    System.out.println("Saving helm");
-                    table.update().set("suit_helm", helm.name()).where("uuid", player.getUuid().toString()).execute();
-                }
-                if (chest != null) {
-                    table.update().set("suit_chest", chest.name()).where("uuid", player.getUuid().toString()).execute();
-                }
-                if (legs != null) {
-                    table.update().set("suit_legs", legs.name()).where("uuid", player.getUuid().toString()).execute();
-                }
-                if (boots != null) {
-                    table.update().set("suit_boots", boots.name()).where("uuid", player.getUuid().toString()).execute();
-                }
-                if (particle != null) {
-                    table.update().set("particle", particle.getType().name()).where("uuid", player.getUuid().toString()).execute();
-                }
+                table.update().set("hat", hat)
+                .set("suit_helm", helm)
+                .set("suit_chest", chest)
+                .set("suit_legs", legs)
+                .set("suit_boots", boots)
+                .set("particle", particle)
+                .where("uuid", player.getUuid().toString()).execute();
             }
         });
     }
@@ -87,7 +73,6 @@ public class PersistentCosmeticsUtil {
                     }
                     String hat = rs.getString("hat");
                     String suitHelm = rs.getString("suit_helm");
-                    System.out.println(suitHelm);
                     String suitChest = rs.getString("suit_chest");
                     String suitLegs = rs.getString("suit_legs");
                     String suitBoots = rs.getString("suit_boots");
@@ -95,24 +80,22 @@ public class PersistentCosmeticsUtil {
                     Bukkit.getScheduler().runTask(UltraCosmetics.getInstance(), new Runnable() {
                         @Override
                         public void run() {
-                            if (hat != null) {
+                            if (hat != null && !hat.isEmpty()) {
                                 player.setHat(Hat.valueOf(hat));
                             }
-                            if (suitHelm != null) {
-                                System.out.println(suitHelm);
-                                System.out.println("Setting");
+                            if (suitHelm != null && !suitHelm.isEmpty()) {
                                 SuitType.valueOf(suitHelm).equip(player.getPlayer(), ArmorSlot.HELMET);
                             }
-                            if (suitChest != null) {
+                            if (suitChest != null && !suitChest.isEmpty()) {
                                 SuitType.valueOf(suitChest).equip(player.getPlayer(), ArmorSlot.CHESTPLATE);
                             }
-                            if (suitLegs != null) {
+                            if (suitLegs != null && !suitLegs.isEmpty()) {
                                 SuitType.valueOf(suitLegs).equip(player.getPlayer(), ArmorSlot.LEGGINGS);
                             }
-                            if (suitBoots != null) {
+                            if (suitBoots != null && !suitBoots.isEmpty()) {
                                 SuitType.valueOf(suitBoots).equip(player.getPlayer(), ArmorSlot.BOOTS);
                             }
-                            if (particle != null) {
+                            if (particle != null && !particle.isEmpty()) {
                                 ParticleEffectType.valueOf(particle).equip(player.getPlayer());
                             }
                         }
