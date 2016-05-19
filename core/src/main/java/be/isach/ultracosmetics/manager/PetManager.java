@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.mcmega.megacraft.CosmeticPermissionEvent;
 import org.mcmega.megacraft.CosmeticType;
+import org.mcmega.megacraft.NoPermItemRenderEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,13 +81,19 @@ public class PetManager implements Listener {
                         if (!hasPerm)
                             continue;
                     if ((boolean) SettingsManager.getConfig().get("No-Permission.Custom-Item.enabled") && !hasPerm) {
-                        Material material = Material.valueOf((String) SettingsManager.getConfig().get("No-Permission.Custom-Item.Type"));
-                        Byte data = Byte.valueOf(String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Data")));
-                        String name = String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Name")).replace("&", "§").replace("{cosmetic-name}", pet.getMenuName()).replace("&", "§");
-                        List<String> npLore = SettingsManager.getConfig().getStringList("No-Permission.Custom-Item.Lore");
-                        String[] array = new String[npLore.size()];
-                        npLore.toArray(array);
-                        inv.setItem(COSMETICS_SLOTS[i], ItemFactory.create(material, data, name, array));
+                        ItemStack customItem = NoPermItemRenderEvent.handleEvent(p, CosmeticType.PET, pet.getMenuName(), pet.getPermission());
+                        
+                        if (customItem == null) {
+                            Material material = Material.valueOf((String) SettingsManager.getConfig().get("No-Permission.Custom-Item.Type"));
+                            Byte data = Byte.valueOf(String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Data")));
+                            String name = String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Name")).replace("{cosmetic-name}", pet.getMenuName()).replace("&", "§");
+                            List<String> npLore = SettingsManager.getConfig().getStringList("No-Permission.Custom-Item.Lore");
+                            String[] array = new String[npLore.size()];
+                            npLore.toArray(array);
+                            inv.setItem(COSMETICS_SLOTS[i], ItemFactory.create(material, data, name, array));
+                        } else {
+                            inv.setItem(COSMETICS_SLOTS[i], customItem);
+                        }
                         i++;
                         continue;
                     }
