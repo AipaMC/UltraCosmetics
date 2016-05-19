@@ -17,6 +17,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,10 +63,14 @@ public class MountManager implements Listener {
                         break;
                     MountType mountType = MountType.enabled().get(h - 1);
                     if (!mountType.isEnabled()) continue;
+                    
+                    //MegaCraft - External permission handling
+                    boolean hasPerm = CosmeticPermissionEvent.handleEvent(p, CosmeticType.MOUNT, mountType.getPermission());
+                    
                     if (SettingsManager.getConfig().getBoolean("No-Permission.Dont-Show-Item"))
-                        if (!p.hasPermission(mountType.getPermission()))
+                        if (!hasPerm)
                             continue;
-                    if ((boolean) SettingsManager.getConfig().get("No-Permission.Custom-Item.enabled") && !p.hasPermission(mountType.getPermission())) {
+                    if ((boolean) SettingsManager.getConfig().get("No-Permission.Custom-Item.enabled") && !hasPerm) {
                         Material material = Material.valueOf((String) SettingsManager.getConfig().get("No-Permission.Custom-Item.Type"));
                         Byte data = Byte.valueOf(String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Data")));
                         String name = String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Name")).replace("{cosmetic-name}", mountType.getMenuName()).replace("&", "§");
@@ -77,7 +83,7 @@ public class MountManager implements Listener {
                     }
                     String lore = null;
                     if (SettingsManager.getConfig().getBoolean("No-Permission.Show-In-Lore"))
-                        lore = ChatColor.translateAlternateColorCodes('&', String.valueOf(SettingsManager.getConfig().get("No-Permission.Lore-Message-" + ((p.hasPermission(mountType.getPermission()) ? "Yes" : "No")))));
+                        lore = ChatColor.translateAlternateColorCodes('&', String.valueOf(SettingsManager.getConfig().get("No-Permission.Lore-Message-" + ((hasPerm ? "Yes" : "No")))));
                     String toggle = MessageManager.getMessage("Menu.Spawn");
                     CustomPlayer cp = UltraCosmetics.getCustomPlayer(p);
                     if (cp.currentMount != null && cp.currentMount.getType() == mountType)
@@ -148,7 +154,9 @@ public class MountManager implements Listener {
     }
 
     public static void equipMount(final MountType TYPE, final Player PLAYER) {
-        if (!PLAYER.hasPermission(TYPE.getPermission())) {
+        //MegaCraft - External permission handling
+        boolean hasPerm = CosmeticPermissionEvent.handleEvent(PLAYER, CosmeticType.MOUNT, TYPE.getPermission());
+        if (hasPerm) {
             if (!playerList.contains(PLAYER)) {
                 PLAYER.sendMessage(MessageManager.getMessage("No-Permission"));
                 playerList.add(PLAYER);

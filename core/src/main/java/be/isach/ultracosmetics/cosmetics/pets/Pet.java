@@ -13,6 +13,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -72,7 +74,9 @@ public abstract class Pet implements Listener {
 
         this.owner = owner;
 
-        if (!getPlayer().hasPermission(getType().getPermission())) {
+        //MegaCraft - External permission handling
+        boolean hasPerm = CosmeticPermissionEvent.handleEvent(getPlayer(), CosmeticType.PET, type.getPermission());
+        if (!hasPerm) {
             getPlayer().sendMessage(MessageManager.getMessage("No-Permission"));
             return;
         }

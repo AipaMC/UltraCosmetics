@@ -19,6 +19,8 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,10 +66,14 @@ public class HatManager implements Listener {
                         break;
                     Hat hat = Hat.enabled().get(h - 1);
                     if (!hat.isEnabled()) continue;
+                    
+                    //MegaCraft - External permission handling
+                    boolean hasPerm = CosmeticPermissionEvent.handleEvent(p, CosmeticType.HAT, hat.getPermission());
+                    
                     if (SettingsManager.getConfig().getBoolean("No-Permission.Dont-Show-Item"))
-                        if (!p.hasPermission(hat.getPermission()))
+                        if (!hasPerm)
                             continue;
-                    if ((boolean) SettingsManager.getConfig().get("No-Permission.Custom-Item.enabled") && !p.hasPermission(hat.getPermission())) {
+                    if ((boolean) SettingsManager.getConfig().get("No-Permission.Custom-Item.enabled") && !hasPerm) {
                         Material material = Material.valueOf((String) SettingsManager.getConfig().get("No-Permission.Custom-Item.Type"));
                         Byte data = Byte.valueOf(String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Data")));
                         String name = String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Name")).replace("{cosmetic-name}", hat.getName()).replace("&", "§");
@@ -80,7 +86,7 @@ public class HatManager implements Listener {
                     }
                     String lore = null;
                     if (SettingsManager.getConfig().getBoolean("No-Permission.Show-In-Lore"))
-                        lore = ChatColor.translateAlternateColorCodes('&', String.valueOf(SettingsManager.getConfig().get("No-Permission.Lore-Message-" + ((p.hasPermission(hat.getPermission()) ? "Yes" : "No")))));
+                        lore = ChatColor.translateAlternateColorCodes('&', String.valueOf(SettingsManager.getConfig().get("No-Permission.Lore-Message-" + ((hasPerm ? "Yes" : "No")))));
                     String toggle = MessageManager.getMessage("Menu.Equip");
                     CustomPlayer cp = UltraCosmetics.getCustomPlayer(p);
                     if (cp.currentHat != null && cp.currentHat == hat)
@@ -142,7 +148,10 @@ public class HatManager implements Listener {
     }
 
     public static void equipHat(Hat hat, final Player PLAYER) {
-        if (!PLAYER.hasPermission(hat.getPermission())) {
+        //MegaCraft - External permission handling
+        boolean hasPerm = CosmeticPermissionEvent.handleEvent(PLAYER, CosmeticType.GADGET, hat.getPermission());
+        
+        if (!hasPerm) {
             if (!playerList.contains(PLAYER)) {
                 PLAYER.sendMessage(MessageManager.getMessage("No-Permission"));
                 playerList.add(PLAYER);

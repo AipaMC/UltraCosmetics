@@ -18,6 +18,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +81,13 @@ public class MorphManager implements Listener {
                     MorphType morphType = MorphType.enabled.get(h - 1);
                     if (!morphType.isEnabled()) continue;
 
+                    //MegaCraft - External permission handling
+                    boolean hasPerm = CosmeticPermissionEvent.handleEvent(p, CosmeticType.MORPH, morphType.getPermission());
+                    
                     if (SettingsManager.getConfig().getBoolean("No-Permission.Dont-Show-Item"))
-                        if (!p.hasPermission(morphType.getPermission()))
+                        if (!hasPerm)
                             continue;
-                    if (SettingsManager.getConfig().getBoolean("No-Permission.Custom-Item.enabled") && !p.hasPermission(morphType.getPermission())) {
+                    if (SettingsManager.getConfig().getBoolean("No-Permission.Custom-Item.enabled") && !hasPerm) {
                         Material material = Material.valueOf((String) SettingsManager.getConfig().get("No-Permission.Custom-Item.Type"));
                         Byte data = Byte.valueOf(String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Data")));
                         String name = String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Name")).replace("&", "§").replace("{cosmetic-name}", morphType.getName()).replace("&", "§");
@@ -95,7 +100,7 @@ public class MorphManager implements Listener {
                     }
                     String lore = null;
                     if (SettingsManager.getConfig().getBoolean("No-Permission.Show-In-Lore"))
-                        lore = ChatColor.translateAlternateColorCodes('&', String.valueOf(SettingsManager.getConfig().get("No-Permission.Lore-Message-" + ((p.hasPermission(morphType.getPermission()) ? "Yes" : "No")))));
+                        lore = ChatColor.translateAlternateColorCodes('&', String.valueOf(SettingsManager.getConfig().get("No-Permission.Lore-Message-" + ((hasPerm ? "Yes" : "No")))));
                     String toggle = MessageManager.getMessage("Menu.Morph");
                     CustomPlayer cp = UltraCosmetics.getCustomPlayer(p);
                     if (cp.currentMorph != null && cp.currentMorph.getType() == morphType)
@@ -152,7 +157,10 @@ public class MorphManager implements Listener {
     }
 
     public static void equipMorph(final MorphType TYPE, final Player PLAYER) {
-        if (!PLAYER.hasPermission(TYPE.getPermission())) {
+        //MegaCraft - External permission handling
+        boolean hasPerm = CosmeticPermissionEvent.handleEvent(PLAYER, CosmeticType.GADGET, TYPE.getPermission());
+        
+        if (!hasPerm) {
             if (!playerList.contains(PLAYER)) {
                 PLAYER.sendMessage(MessageManager.getMessage("No-Permission"));
                 playerList.add(PLAYER);

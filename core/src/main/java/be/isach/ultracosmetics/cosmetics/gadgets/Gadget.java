@@ -26,6 +26,8 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -102,7 +104,9 @@ public abstract class Gadget implements Listener {
             this.owner = owner;
             if (UltraCosmetics.getCustomPlayer(getPlayer()).currentGadget != null)
                 UltraCosmetics.getCustomPlayer(getPlayer()).removeGadget();
-            if (!getPlayer().hasPermission(permission)) {
+            //MegaCraft - External permission handling
+            boolean hasPerm = CosmeticPermissionEvent.handleEvent(getPlayer(), CosmeticType.GADGET, permission);
+            if (!hasPerm) {
                 getPlayer().sendMessage(MessageManager.getMessage("No-Permission"));
                 return;
             }

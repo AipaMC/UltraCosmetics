@@ -17,6 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.util.UUID;
 
@@ -62,7 +64,9 @@ public abstract class Mount implements Listener {
         this.type = type;
         this.owner = owner;
         if (owner != null) {
-            if (!getPlayer().hasPermission(type.getPermission())) {
+            //MegaCraft - External permission handling
+            boolean hasPerm = CosmeticPermissionEvent.handleEvent(getPlayer(), CosmeticType.MOUNT, type.getPermission());
+            if (!hasPerm) {
                 getPlayer().sendMessage(MessageManager.getMessage("No-Permission"));
                 return;
             }

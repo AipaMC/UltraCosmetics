@@ -19,6 +19,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,10 +61,14 @@ public class GadgetManager implements Listener {
                 break;
             GadgetType g = GadgetType.enabled().get(h - 1);
             if (!g.isEnabled()) continue;
+            
+            //MegaCraft - External permission handling
+            boolean hasPerm = CosmeticPermissionEvent.handleEvent(p, CosmeticType.GADGET, g.getPermission());
+            
             if (SettingsManager.getConfig().getBoolean("No-Permission.Dont-Show-Item"))
-                if (!p.hasPermission(g.getPermission()))
+                if (!hasPerm)
                     continue;
-            if (SettingsManager.getConfig().getBoolean("No-Permission.Custom-Item.enabled") && !p.hasPermission(g.getPermission())) {
+            if (SettingsManager.getConfig().getBoolean("No-Permission.Custom-Item.enabled") && !hasPerm) {
                 Material material = Material.valueOf((String) SettingsManager.getConfig().get("No-Permission.Custom-Item.Type"));
                 Byte data = Byte.valueOf(String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Data")));
                 String name = String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Name")).replace("{cosmetic-name}", g.getName()).replace("&", "§");
@@ -88,7 +94,7 @@ public class GadgetManager implements Listener {
                     loreList = itemMeta.getLore();
                 loreList.add("");
                 loreList.add(MessageManager.getMessage("Ammo").replace("%ammo%", "" + UltraCosmetics.getCustomPlayer(p).getAmmo(g.toString().toLowerCase())));
-                loreList.add(MessageManager.getMessage("Right-Click-Buy-Ammo"));
+                //loreList.add(MessageManager.getMessage("Right-Click-Buy-Ammo"));
             }
             if (g.showsDescription()) {
                 loreList.add("");
@@ -99,7 +105,7 @@ public class GadgetManager implements Listener {
             if (SettingsManager.getConfig().getBoolean("No-Permission.Show-In-Lore"))
                 loreList.add(ChatColor.translateAlternateColorCodes('&',
                         String.valueOf(SettingsManager.getConfig().get("No-Permission.Lore-Message-" +
-                                ((p.hasPermission(g.getPermission()) ? "Yes" : "No"))))));
+                                ((hasPerm) ? "Yes" : "No")))));
             itemMeta.setLore(loreList);
             is.setItemMeta(itemMeta);
             inv.setItem(COSMETICS_SLOTS[i], is);
@@ -163,7 +169,10 @@ public class GadgetManager implements Listener {
     }
 
     public static void equipGadget(final GadgetType type, final Player PLAYER) {
-        if (!PLAYER.hasPermission(type.getPermission())) {
+        //MegaCraft - External permission handling
+        boolean hasPerm = CosmeticPermissionEvent.handleEvent(PLAYER, CosmeticType.GADGET, type.getPermission());
+        
+        if (!hasPerm) {
             if (!playerList.contains(PLAYER)) {
                 PLAYER.sendMessage(MessageManager.getMessage("No-Permission"));
                 playerList.add(PLAYER);

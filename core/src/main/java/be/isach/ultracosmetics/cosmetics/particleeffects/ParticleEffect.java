@@ -13,6 +13,8 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.util.UUID;
 
@@ -52,7 +54,9 @@ public abstract class ParticleEffect implements Listener {
             return;
         if (owner != null) {
             this.owner = owner;
-            if (!getPlayer().hasPermission(type.getPermission())) {
+            //MegaCraft - External permission handling
+            boolean hasPerm = CosmeticPermissionEvent.handleEvent(getPlayer(), CosmeticType.PARTICLE, type.getPermission());
+            if (!hasPerm) {
                 getPlayer().sendMessage(MessageManager.getMessage("No-Permission"));
                 return;
             }

@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.util.UUID;
 
@@ -43,7 +45,9 @@ public abstract class Morph implements Listener {
         if (UltraCosmetics.getCustomPlayer(getPlayer()).currentMorph != null)
             UltraCosmetics.getCustomPlayer(getPlayer()).removeMorph();
 
-        if (!getPlayer().hasPermission(getType().getPermission())) {
+        //MegaCraft - External permission handling
+        boolean hasPerm = CosmeticPermissionEvent.handleEvent(getPlayer(), CosmeticType.MORPH, getType().getPermission());
+        if (!hasPerm) {
             getPlayer().sendMessage(MessageManager.getMessage("No-Permission"));
             return;
         }

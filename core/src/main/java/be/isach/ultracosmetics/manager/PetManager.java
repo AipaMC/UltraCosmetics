@@ -21,6 +21,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.mcmega.megacraft.CosmeticPermissionEvent;
+import org.mcmega.megacraft.CosmeticType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,10 +72,14 @@ public class PetManager implements Listener {
                         break;
                     PetType pet = PetType.enabled().get(h - 1);
                     if (!pet.isEnabled()) continue;
+                    
+                    //MegaCraft - External permission handling
+                    boolean hasPerm = CosmeticPermissionEvent.handleEvent(p, CosmeticType.PET, pet.getPermission());
+                    
                     if (SettingsManager.getConfig().getBoolean("No-Permission.Dont-Show-Item"))
-                        if (!p.hasPermission(pet.getPermission()))
+                        if (!hasPerm)
                             continue;
-                    if ((boolean) SettingsManager.getConfig().get("No-Permission.Custom-Item.enabled") && !p.hasPermission(pet.getPermission())) {
+                    if ((boolean) SettingsManager.getConfig().get("No-Permission.Custom-Item.enabled") && !hasPerm) {
                         Material material = Material.valueOf((String) SettingsManager.getConfig().get("No-Permission.Custom-Item.Type"));
                         Byte data = Byte.valueOf(String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Data")));
                         String name = String.valueOf(SettingsManager.getConfig().get("No-Permission.Custom-Item.Name")).replace("&", "§").replace("{cosmetic-name}", pet.getMenuName()).replace("&", "§");
@@ -87,7 +93,7 @@ public class PetManager implements Listener {
                     String lore = null;
                     if (SettingsManager.getConfig().getBoolean("No-Permission.Show-In-Lore")) {
                         lore = ChatColor.translateAlternateColorCodes('&', String.valueOf(SettingsManager.getConfig()
-                                .get("No-Permission.Lore-Message-" + ((p.hasPermission(pet.getPermission()) ? "Yes" : "No")))));
+                                .get("No-Permission.Lore-Message-" + ((hasPerm ? "Yes" : "No")))));
                     }
                     String toggle = MessageManager.getMessage("Menu.Spawn");
                     CustomPlayer cp = UltraCosmetics.getCustomPlayer(p);
@@ -181,7 +187,10 @@ public class PetManager implements Listener {
     }
 
     public static void equipPet(final PetType type, final Player player) {
-        if (!player.hasPermission(type.getPermission())) {
+        //MegaCraft - External permission handling
+        boolean hasPerm = CosmeticPermissionEvent.handleEvent(player, CosmeticType.PET, type.getPermission());
+        
+        if (!hasPerm) {
             if (!noSpamList.contains(player)) {
                 player.sendMessage(MessageManager.getMessage("No-Permission"));
                 noSpamList.add(player);
