@@ -367,6 +367,31 @@ public class MessageManager {
         addMessage("Suits.Pink.chestplate-name", "&d&lPink &f&lChestplate");
         addMessage("Suits.Pink.leggings-name", "&d&lPink &f&lLeggings");
         addMessage("Suits.Pink.boots-name", "&d&lPink &f&lBoots");
+        
+        //MegaCraft Hats
+        addMessage("Hats.Melon.Name", "&a&lMelon");
+        addMessage("Hats.TV.Name", "&a&lTV");
+        addMessage("Hats.MossyCobble.Name", "&a&lMossy Cobble");
+        addMessage("Hats.Cobble.Name", "&a&lCobble");
+        addMessage("Hats.EnchantTable.Name", "&a&lEnchantment Table");
+        addMessage("Hats.ChorusFlower.Name", "&a&lChorus Flower");
+        addMessage("Hats.OakLog.Name", "&a&lOak Log");
+        addMessage("Hats.SlimeBlock.Name", "&a&lSlime Block");
+        addMessage("Hats.Portal.Name", "&a&lPortal");
+        addMessage("Hats.Noteblock.Name", "&a&lNote Block");
+        addMessage("Hats.StoneSlab.Name", "&a&lStone Slab");
+        addMessage("Hats.IronBlock.Name", "&a&lIron Block");
+        addMessage("Hats.GoldBlock.Name", "&a&lGold Block");
+        addMessage("Hats.DiamondBlock.Name", "&a&lDiamond Block");
+        addMessage("Hats.EmeraldBlock.Name", "&a&lEmerald Block");
+        addMessage("Hats.Obsidian.Name", "&a&lObsidian");
+        addMessage("Hats.Brick.Name", "&a&lBrick");
+        addMessage("Hats.Beacon.Name", "&a&lBeacon");
+        addMessage("Hats.LapisBlock.Name", "&a&lLapis Block");
+        addMessage("Hats.Bedrock.Name", "&a&lBedrock");
+        addMessage("Hats.RedstoneOre.Name", "&a&lRedstone Ore");
+        addMessage("Hats.GoldOre.Name", "&a&lGold Ore");
+        addMessage("Hats.DiamondOre.Name", "&a&lDiamond Ore");
     }
 
     /**

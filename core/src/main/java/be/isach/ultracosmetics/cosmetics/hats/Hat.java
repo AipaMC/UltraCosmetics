@@ -16,6 +16,31 @@ import java.util.List;
 public enum Hat {
 
     // Most horrible cosmetic to register.
+    //MegaCraft Hats
+    MELON(ItemFactory.createSkull("YzNmZWQ1MTRjM2UyMzhjYTdhYzFjOTRiODk3ZmY2NzExYjFkYmU1MDE3NGFmYzIzNWM4ZjgwZDAyOSJ9fX0="), "Melon", "&7&oWear a melon hat"),
+    TV(ItemFactory.createSkull("N2Y0YjhjOWYzMzc4NjkxNTllZDMxYTcxYmQ1MDNiNzI1YjJlZTI2NGE2ZWIxMWU1OGU2NTdlMWE4YTk5YyJ9fX0="), "TV", "&7&oWear a TV hat"),
+    MOSSYCOBBLE(ItemFactory.createSkull("YTQ0YzFlOGU4MjY3MmJiYTU4OTJmZDQ2NTlmOGRhZDg0ZDE1NDVkYjI2ZGI1MmVjYzkxOGYzMmExMzkxNTEzIn19fQ=="), "MossyCobble", "&7&oWear a mossy cobble hat"),
+    COBBLE(ItemFactory.createSkull("NDU0ZDljNDg4YzNmYmRlNTQ1NGUzODYxOWY5Y2M1YjViYThjNmMwMTg2ZjhhYTFkYTYwOTAwZmNiYzNlYTYifX19"), "Cobble", "&7&oWear a cobble hat"),
+    ENCHANTTABLE(ItemFactory.createSkull("NjI2NzJjODdlZWY2ODE4ODI4OTE4ZGQzY2EwMzg1NmNjYjQzNjZlN2M5YWMyNjI0YTk0MmYwZGI3ZTk2YSJ9fX0="), "EnchantTable", "&7&oWear a enchantment table hat"),
+    CHORUSFLOWER(ItemFactory.createSkull("OTJlYjMwYTBiZTNkN2M3ZTE2MmM3NmU3MmEzYzRjYzQ0MjIzNTY3MTYyYTk0MTc1MjU3MmFlNmNjZWI5NmM4NiJ9fX0="), "ChorusFlower", "&7&oWear a chorus flower hat"),
+    OAKLOG(ItemFactory.createSkull("NmQyZTMxMDg3OWE2NDUwYWY1NjI1YmNkNDUwOTNkZDdlNWQ4ZjgyN2NjYmZlYWM2OWM4MTUzNzc2ODQwNmIifX19"), "OakLog", "&7&oWear a oak log hat"),
+    SLIMEBLOCK(ItemFactory.createSkull("OTBlNjVlNmU1MTEzYTUxODdkYWQ0NmRmYWQzZDNiZjg1ZThlZjgwN2Y4MmFhYzIyOGE1OWM0YTk1ZDZmNmEifX19"), "SlimeBlock", "&7&oWear a slime block hat"),
+    PORTAL(ItemFactory.createSkull("YjBiZmMyNTc3ZjZlMjZjNmM2ZjczNjVjMmM0MDc2YmNjZWU2NTMxMjQ5ODkzODJjZTkzYmNhNGZjOWUzOWIifX19"), "Portal", "&7&oWear a portal hat"),
+    NOTEBLOCK(ItemFactory.createSkull("NGNlZWI3N2Q0ZDI1NzI0YTljYWYyYzdjZGYyZDg4Mzk5YjE0MTdjNmI5ZmY1MjEzNjU5YjY1M2JlNDM3NmUzIn19fQ=="), "Noteblock", "&7&oWear a note block hat"),
+    STONESLAB(ItemFactory.createSkull("OGRkMGNkMTU4YzJiYjY2MTg2NTBlMzk1NGIyZDI5MjM3ZjViNGMwZGRjN2QyNThlMTczODBhYjY5NzlmMDcxIn19fQ=="), "StoneSlab", "&7&oWear a stone slab hat"),
+    IRONBLOCK(ItemFactory.createSkull("MTI2Yjc3MjMyOWNmMzJmODY0M2M0OTI4NjI2YjZhMzI1MjMzZmY2MWFhOWM3NzI1ODczYTRiZDY2ZGIzZDY5MiJ9fX0"), "IronBlock", "&7&oWear a iron block hat"),
+    GOLDBLOCK(ItemFactory.createSkull("NTRiZjg5M2ZjNmRlZmFkMjE4Zjc4MzZlZmVmYmU2MzZmMWMyY2MxYmI2NTBjODJmY2NkOTlmMmMxZWU2In19fQ=="), "GoldBlock", "&7&oWear a gold block hat"),
+    DIAMONDBLOCK(ItemFactory.createSkull("OTYzMTU5N2RjZTRlNDA1MWU4ZDVhNTQzNjQxOTY2YWI1NGZiZjI1YTBlZDYwNDdmMTFlNjE0MGQ4OGJmNDhmIn19fQ=="), "DiamondBlock", "&7&oWear a diamond block hat"),
+    EMERALDBLOCK(ItemFactory.createSkull("YWM5MDZkNjg4ZTY1ODAyNTY5ZDk3MDViNTc5YmNlNTZlZGM4NmVhNWMzNmJkZDZkNmZjMzU1MTZhNzdkNCJ9fX0="), "EmeraldBlock", "&7&oWear a emerald block hat"),
+    OBSIDIAN(ItemFactory.createSkull("Nzg0MGI4N2Q1MjI3MWQyYTc1NWRlZGM4Mjg3N2UwZWQzZGY2N2RjYzQyZWE0NzllYzE0NjE3NmIwMjc3OWE1In19fQ=="), "Obsidian", "&7&oWear a obsidian hat"),
+    BRICK(ItemFactory.createSkull("Y2UyNWJjNDJkNDExNDkxOThjOGM1MjNjMjM5MjA3MzdiOWNlZGRhOWE5OWVkYTUzZjMyMzJmNDg5NjQifX19"), "Brick", "&7&oWear a brick hat"),
+    BEACON(ItemFactory.createSkull("Y2RlMzNjOTVmZWMxYjhkOTg4MjUwZjVmNWIzYTI0ODU3NDI0MzlmYWVhYTc1ZWQ1MDZlYTAxZDc1ZTE3ZjIxIn19fQ=="), "Beacon", "&7&oWear a beacon hat"),
+    LAPISBLOCK(ItemFactory.createSkull("ODZmNDc2ODcxZWQyM2Y3OWU3YjlkNDk1NDg5ODg3ZTI0NGM2MTljNWUxOWU0MWNmOTViMjcxYTJlYmU3NSJ9fX0="), "LapisBlock", "&7&oWear a lapis block hat"),
+    BEDROCK(ItemFactory.createSkull("MzZkMWZhYmRmM2UzNDI2NzFiZDlmOTVmNjg3ZmUyNjNmNDM5ZGRjMmYxYzllYThmZjE1YjEzZjFlN2U0OGI5In19fQ=="), "Bedrock", "&7&oWear a bedrock hat"),
+    REDSTONEORE(ItemFactory.createSkull("NTY5YTFmMTE0MTUxYjQ1MjEzNzNmMzRiYzE0YzI5NjNhNTAxMWNkYzI1YTY1NTRjNDhjNzA4Y2Q5NmViZmMifX19"), "RedstoneOre", "&7&oWear a redstone ore hat"),
+    GOLDORE(ItemFactory.createSkull("NzNiYzk2NWQ1NzljM2M2MDM5ZjBhMTdlYjdjMmU2ZmFmNTM4YzdhNWRlOGU2MGVjN2E3MTkzNjBkMGE4NTdhOSJ9fX0="), "GoldOre", "&7&oWear a gold ore hat"),
+    DIAMONDORE(ItemFactory.createSkull("MTFlZDlhYmY1MWZlNGVhODRjZmNiMjcyOTdmMWJjNTRjZDM4MmVkZjg1ZTdiZDZlNzVlY2NhMmI4MDY2MTEifX19"), "DiamondOre", "&7&oWear a diamond ore hat"),
+    
     ASTRONAUT(ItemFactory.createSkull("M2U4YWFkNjczMTU3YzkyMzE3YTg4YjFmODZmNTI3MWYxY2Q3Mzk3ZDdmYzhlYzMyODFmNzMzZjc1MTYzNCJ9fX0="), "Astronaut", "&7&oHouston, we have got a problem."),
     SCARED(ItemFactory.createSkull("NjM2ZTI2YzQ0NjU5ZTgxNDhlZDU4YWE3OWU0ZDYwZGI1OTVmNDI2NDQyMTE2ZjgxYjU0MTVjMjQ0NmVkOCJ9fX0="), "Scared", "&7&oOh gawd, that scared me!"),
     ANGEL(ItemFactory.createSkull("M2UxZGViYzczMjMxZjhlZDRiNjlkNWMzYWMxYjFmMThmMzY1NmE4OTg4ZTIzZjJlMWJkYmM0ZTg1ZjZkNDZhIn19fQ=="), "Angel", "&7&oDid it hurt when you fell from heaven?"),
