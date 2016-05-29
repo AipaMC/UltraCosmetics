@@ -163,7 +163,7 @@ public class MountManager implements Listener {
     public static void equipMount(final MountType TYPE, final Player PLAYER) {
         //MegaCraft - External permission handling
         boolean hasPerm = CosmeticPermissionEvent.handleEvent(PLAYER, CosmeticType.MOUNT, TYPE.getPermission());
-        if (hasPerm) {
+        if (!hasPerm) {
             if (!playerList.contains(PLAYER)) {
                 PLAYER.sendMessage(MessageManager.getMessage("No-Permission"));
                 playerList.add(PLAYER);
