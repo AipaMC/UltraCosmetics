@@ -44,6 +44,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -763,6 +764,10 @@ public class UltraCosmetics extends JavaPlugin {
                 @Override
                 public void run() {
                     try {
+                        if (co != null && !co.isClosed()) {
+                            co.close();
+                            log("Closed existing connection");
+                        }
                         String hostname = String.valueOf(SettingsManager.getConfig().get("Ammo-System-For-Gadgets.MySQL.hostname"));
                         String portNumber = String.valueOf(SettingsManager.getConfig().get("Ammo-System-For-Gadgets.MySQL.port"));
                         String database = String.valueOf(SettingsManager.getConfig().get("Ammo-System-For-Gadgets.MySQL.database"));
@@ -970,6 +975,15 @@ public class UltraCosmetics extends JavaPlugin {
             versionManager.getModule().disable();
         } catch (Exception e) {
         }
+        
+        //Close MySQL
+       try {
+           if (co != null && !co.isClosed()) {
+               co.close();
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
     }
 
     /**
