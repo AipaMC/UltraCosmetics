@@ -42,7 +42,7 @@ public class PersistentCosmeticsUtil {
         String hat = player.currentHat != null ? player.currentHat.name() : "";
         String helm = player.currentHelmet != null ? player.currentHelmet.getType().name() : "";
         String chest = player.currentChestplate != null ? player.currentChestplate.getType().name() : "";
-        String legs = player.currentLeggings != null ? player.currentHelmet.getType().name() : "";
+        String legs = player.currentLeggings != null ? player.currentLeggings.getType().name() : "";
         String boots = player.currentBoots != null ? player.currentBoots.getType().name() : "";
         String particle = player.currentParticleEffect != null ? player.currentParticleEffect.getType().name() : "";
         
